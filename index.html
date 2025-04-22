@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VA Hiring Form</title>
+    <link rel="stylesheet" href="style.css"> <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>VA Hiring Application</h1>
+        <p>Please fill out the form below.</p>
+
+        <form id="vaForm" novalidate> <div class="honeypot" aria-hidden="true">
+                <label for="hp_field">Leave this field empty</label>
+                <input type="text" id="hp_field" name="honeypot_field" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                <div class="error-message" id="fullNameError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                 <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" placeholder="e.g., +92 300 1234567" required>
+                 <div class="error-message" id="phoneError"></div>
+             </div>
+
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" rows="3" placeholder="Your street address" required></textarea>
+                 <div class="error-message" id="addressError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" placeholder="Your city" required>
+                 <div class="error-message" id="cityError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" placeholder="Your country" required>
+                 <div class="error-message" id="countryError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="qualification">Qualification:</label>
+                <textarea id="qualification" name="qualification" rows="4" placeholder="Your highest qualifications, relevant skills" required></textarea>
+                 <div class="error-message" id="qualificationError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="experience">Previous Experience:</label>
+                <textarea id="experience" name="experience" rows="4" placeholder="Describe relevant previous work experience" required></textarea>
+                 <div class="error-message" id="experienceError"></div>
+            </div>
+
+            <div class="form-group">
+                 <div class="g-recaptcha" data-sitekey="6LdY7SArAAAAAJpwjreV90zCdsTUUTTyDBFe1Jvm"></div>
+                <div class="error-message" id="recaptchaError"></div> </div>
+
+            <button type="submit" id="submitButton">
+                <span class="button-text">Submit Application</span>
+                <span class="spinner" style="display: none;"></span></button>
+        </form>
+
+        <div id="responseMessage" class="response-message" style="display: none;" aria-live="polite"></div>
+     </div>
+
+    <script src="script.js"></script> </body>
+</html>
