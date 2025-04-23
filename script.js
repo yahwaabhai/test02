@@ -5,7 +5,7 @@ const buttonText = submitButton.querySelector('.button-text');
 const spinner = submitButton.querySelector('.spinner');
 
 // V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V V
-// !!! IMPORTANT: REPLACE THE LINE BELOW WITH YOUR ACTUAL WEB APP URL !!!
+// !!! ENSURE THIS IS YOUR CORRECT, DEPLOYED WEB APP URL !!!
 const scriptURL = 'https://script.google.com/macros/s/AKfycbyUI4fjvjpYBR_amY8UMPxTt667Td4dDODCbPhifWyF0x08Li6cFC8udl4FFQzxHY0GFg/exec';
 // ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
 
@@ -62,6 +62,7 @@ function validateForm() {
     }
 
     // Check reCAPTCHA response
+    // Ensure grecaptcha object exists before calling getResponse
     const recaptchaResponse = (typeof grecaptcha !== 'undefined') ? grecaptcha.getResponse() : '';
     if (!recaptchaResponse) {
         isValid = false;
@@ -71,29 +72,31 @@ function validateForm() {
     return isValid;
 }
 
-
-// Check if URL is configured on load
-if (!scriptURL || scriptURL === 'https://script.google.com/macros/s/AKfycbyUI4fjvjpYBR_amY8UMPxTt667Td4dDODCbPhifWyF0x08Li6cFC8udl4FFQzxHY0GFg/exec') {
-    console.error("ERROR: Apps Script URL is not set in script.js!");
+// *** CORRECTED Configuration Check ***
+// Check if URL is missing OR if it STILL contains the placeholder
+if (!scriptURL || scriptURL === 'YOUR_APPS_SCRIPT_WEB_APP_URL') { // <-- Compare against placeholder
+    console.error("ERROR: Apps Script URL is not set correctly in script.js!");
     responseMessage.textContent = 'Configuration error: The form cannot be submitted. Please contact the administrator.';
     responseMessage.className = 'response-message error';
     responseMessage.style.display = 'block';
-    if(submitButton) submitButton.disabled = true;
+    if(submitButton) submitButton.disabled = true; // Disable submit if misconfigured
 }
 
 form.addEventListener('submit', e => {
     e.preventDefault(); // Stop browser from submitting the form traditionally
 
+    // *** CORRECTED Configuration Check within listener ***
+     if (!scriptURL || scriptURL === 'YOUR_APPS_SCRIPT_WEB_APP_URL') {
+         responseMessage.textContent = 'Configuration error: Form cannot be submitted.';
+         responseMessage.className = 'response-message error';
+         responseMessage.style.display = 'block';
+         return; // Stop the submission if URL is not set
+     }
+
     // Honeypot Check
     const honeypot = form.querySelector('[name="honeypot_field"]');
     if (honeypot && honeypot.value) {
         console.log("Honeypot field filled, likely bot submission.");
-        // Optionally reset form and show generic success to confuse bots
-        // form.reset();
-        // if (typeof grecaptcha !== 'undefined') { grecaptcha.reset(); }
-        // responseMessage.textContent = 'Thank you for your submission!';
-        // responseMessage.className = 'response-message success';
-        // responseMessage.style.display = 'block';
         return; // Silently stop processing
     }
 
@@ -183,3 +186,5 @@ form.querySelectorAll('input[required], textarea[required]').forEach(input => {
         }
     });
 });
+
+// *** NO EXTRA BRACE HERE ***
